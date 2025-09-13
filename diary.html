@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Diary</title>
+  <link rel="stylesheet" href="styles/index.css">
+  <link rel="stylesheet" href="styles/diary.css">
+</head>
+<body>
+  <div id="header"></div>
+
+  <div class="container">
+    <div class="sidebar">
+      <h3>My Diary Entries</h3>
+      <ul>
+        <li>Entry 1</li>
+        <li>Entry 2</li>
+      </ul>
+    </div>
+    <div class="main-content">
+      <textarea placeholder="Write your diary entry here..."></textarea>
+
+      <!-- Chatbot Response Section -->
+      <div class="chatbot-section">
+        <strong>Chatbot:</strong> Your reflections will appear here after analysis...
+      </div>
+
+      <div class="buttons">
+        <button class="finish-btn">Finish</button>
+        <button class="save-btn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer"></div>
+
+  <script>
+    // Load header and footer
+    async function loadComponent(id, file) {
+      const res = await fetch(file);
+      document.getElementById(id).innerHTML = await res.text();
+    }
+    loadComponent("header", "header.html");
+    loadComponent("footer", "footer.html");
+  </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Mental Wellness Platform</title>
+      <link rel="stylesheet" href="styles/index.css">
+    </head>
+    <body>
+
+      <div id="header"></div>
+
+      <div class="container">
+        <!-- Human Professionals -->
+        <div class="card">
+          <h3>👩‍⚕️ Connect with Human Professionals</h3>
+          <p>Browse trusted, verified mental health professionals who can support you directly.</p>
+          <button class="btn" onclick="window.location.href='professionals.html'">View Professionals</button>
+        </div>
+
+        <!-- General AI Professional -->
+        <div class="card">
+          <h3>🤖 General AI Professional & Guide</h3>
+          <p>Talk with an empathetic AI guide to understand your symptoms and get support.</p>
+          <button class="btn" onclick="window.location.href='generalchat.html'">Chat Now</button>
+        </div>
+
+        <!-- Specialist AI Professionals -->
+        <div class="card">
+          <h3>🧠 Specialist AI Professionals</h3>
+          <p>Get tailored help from AI companions specializing in Anxiety, Depression, and more.</p>
+          <button class="btn">Choose Specialist</button>
+        </div>
+
+        <!-- Confidential Diary -->
+        <div class="card">
+          <h3>📔 Your Confidential Diary</h3>
+          <p>Write your thoughts and feelings securely. Only you can access your diary.</p>
+          <button class="btn" onclick="openDiary()">Open Diary</button>
+        </div>
+
+        <!-- Progress Game -->
+        <div class="card">
+          <h3>🎮 Progress Tracking Game</h3>
+          <p>Track your progress journey with fun mood check-ins and progress challenges.</p>
+          <button class="btn" onclick="playGame()">Play Game</button>
+          <p id="gameResult"></p>
+        </div>
+
+        <!-- Community Safe Space -->
+        <div class="card">
+          <h3>🌐 Community Safe Space</h3>
+          <p>Join our supportive community forums to share experiences and find solidarity.</p>
+          <button class="btn">Join Community</button>
+        </div>
+      </div>
+
+      <div id="footer"></div>
+
+      <script>
+        // Function to load external HTML into placeholder
+        async function loadComponent(id, file) {
+          const res = await fetch(file);
+          document.getElementById(id).innerHTML = await res.text();
+        }
+
+        // Load header and footer
+        loadComponent("header", "header.html");
+        loadComponent("footer", "footer.html");
+      </script>
+
+      <script>
+        // Simple progress game (mood check)
+        function playGame() {
+          const moods = ["😊 You’re feeling positive today!", 
+                        "😐 A balanced day, keep going!", 
+                        "😟 A tough moment, but you’re strong!", 
+                        "💪 You’re making progress every day!"];
+          const randomMood = moods[Math.floor(Math.random() * moods.length)];
+          document.getElementById("gameResult").innerText = randomMood;
+        }
+
+        // Close modal if clicked outside
+        window.onclick = function(event) {
+          if (event.target == diaryModal) {
+            closeDiary();
+          }
+        }
+
+        // Toggle menu
+        document.querySelector(".menu-btn").addEventListener("click", function(e) {
+          const dropdown = document.querySelector(".menu-dropdown");
+          dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+          e.stopPropagation(); // prevent window click from closing immediately
+        });
+
+        // Close menu if clicked outside
+        window.addEventListener("click", function() {
+          document.querySelector(".menu-dropdown").style.display = "none";
+        });
+      </script>
+    </body>
+  </html>
