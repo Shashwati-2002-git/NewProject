@@ -31,10 +31,14 @@ const dbConfig = {
   },
 };
 
+let pool; // global connection pool
+
 async function connectDB() {
   try {
-    const pool = await sql.connect(dbConfig);
-    console.log("✅ Connected to SanctoMindDB");
+    if (!pool) {
+      pool = await sql.connect(dbConfig);
+      console.log("✅ Connected to SanctoMindDB");
+    }
     return pool;
   } catch (err) {
     console.error("❌ DB connection failed:", err.message);
@@ -91,6 +95,62 @@ app.get("/api/professionals", async (req, res) => {
   } catch (err) {
     console.error("DB error:", err);
     res.status(500).json({ error: "Database query failed" });
+  }
+});
+
+// Save diary entry
+app.post("/api/diary", async (req, res) => {
+  try {
+    const { content, title, geminiReply } = req.body;
+    console.log("📥 Received diary:", { content, title, geminiReply });
+
+    if (!content || !title) {
+      return res.status(400).json({ error: "Content and title required" });
+    }
+
+    const db = await connectDB();
+    const now = new Date();
+    const date = now.toISOString().slice(0, 10);
+    const time = now.toTimeString().slice(0, 8);
+
+    const result = await db.request()
+      .input("date", sql.Date, date)
+      .input("time", sql.VarChar(8), time)
+      .input("content", sql.NVarChar(sql.MAX), content)
+      .input("title", sql.NVarChar(255), title)
+      .input("geminiReply", sql.NVarChar(sql.MAX), geminiReply || null)
+      .query(`
+        INSERT INTO DiaryEntries (EntryDate, EntryTime, Content, EntryName, GeminiReply)
+        OUTPUT INSERTED.ID
+        VALUES (@date, @time, @content, @title, @geminiReply)
+      `);
+
+    res.json({
+      success: true,
+      id: result.recordset[0].ID,
+      date,
+      time,
+      title,
+      content,
+      geminiReply
+    });
+  } catch (err) {
+    console.error("❌ Error saving diary:", err);
+    res.status(500).json({ error: "Failed to save diary entry" });
+  }
+});
+
+// Fetch all diary entries
+app.get("/api/diary", async (req, res) => {
+  try {
+    const db = await connectDB(); // ✅ always use this
+    const result = await db.request()
+      .query("SELECT ID, EntryDate, EntryTime, Content, EntryName, GeminiReply FROM DiaryEntries ORDER BY ID DESC");
+
+    res.json(result.recordset);
+  } catch (err) {
+    console.error("Error fetching diary entries:", err);
+    res.status(500).json({ error: "Failed to fetch diary entries" });
   }
 });
 
