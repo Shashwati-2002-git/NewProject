@@ -1,0 +1,238 @@
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+margin: 0;
+padding: 0;
+background: #f4f7fb;
+color: #333;
+}
+header {
+background: linear-gradient(135deg, #3d2c8d, #5a3ea1, #7b4ed4);
+color: white;
+padding: 20px;
+text-align: center;
+border-radius: 0 0 20px 20px;
+}
+header h1 {
+margin: 0;
+font-size: 2.2em;
+}
+header p {
+font-size: 1.1em;
+}
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 30px auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* exactly 3 columns */
+  gap: 20px;
+}
+.card {
+background: white;
+border-radius: 15px;
+padding: 20px;
+box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+text-align: center;
+transition: transform 0.2s ease;
+}
+.card:hover {
+transform: translateY(-5px);
+}
+.card h3 {
+margin-top: 0;
+}
+.btn {
+background: #6a5acd;
+color: white;
+border: none;
+padding: 10px 18px;
+margin-top: 10px;
+border-radius: 8px;
+cursor: pointer;
+transition: background 0.3s ease;
+}
+.btn:hover {
+background: #5941b1;
+}
+textarea {
+width: 100%;
+height: 150px;
+border-radius: 8px;
+border: 1px solid #ccc;
+padding: 10px;
+resize: none;
+}
+.close {
+float: right;
+cursor: pointer;
+font-weight: bold;
+color: #444;
+}
+/* Game section */
+#gameResult {
+margin-top: 15px;
+font-weight: bold;
+color: #444;
+}
+
+header {
+  display: flex;
+  justify-content: center; /* center contents horizontally */
+  align-items: center;
+  flex-wrap: wrap;
+  position: relative; /* allow right-side absolute positioning */
+}
+/* Center block */
+.header-left {
+  text-align: center;
+}
+/* Right side buttons fixed to right */
+.header-right {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.login-link {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.login-link:hover {
+  text-decoration: none;
+  color: #ffd700;
+}
+
+.login-link .profile-icon {
+  margin-right: 6px;
+}
+
+.menu-container {
+  position: relative;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.menu-btn:hover {
+  color: #ffd700;
+}
+
+.menu-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 120%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  min-width: 180px;
+  z-index: 1000;
+}
+
+.menu-dropdown a {
+  display: block;
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+  font-size: 12px;
+  text-align: left;
+}
+
+.menu-dropdown a:hover {
+  background: #f0f0f5;
+}
+
+.profile-icon {
+  width: 32px;      /* size of icon */
+  height: 32px;
+  border-radius: 50%; /* makes it round */
+  object-fit: cover;  /* ensures image fills the circle */
+  margin-right: 6px;  /* spacing before "Login" text */
+  vertical-align: middle;
+}
+
+.patron-link {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.patron-link:hover {
+  text-decoration: none;
+  color: #ffd700; /* optional: golden hover effect */
+}
+
+footer {
+background: #6a5acd;
+color: white;
+text-align: center;
+padding: 1rem;
+margin-top: 30px;
+}
+
+/* Default header already works for desktop, but adjust for mobile */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    padding: 15px;
+    text-align: center;
+  }
+
+  .header-right {
+    position: static;   /* remove absolute positioning */
+    transform: none;
+    margin-top: 10px;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .login-link, .patreon-link, .menu-btn {
+    font-size: 0.95em;
+  }
+}
+
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    grid-template-columns: 1fr; /* 1 column on mobile */
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .btn {
+    width: 100%; /* buttons span full width on mobile */
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .menu-dropdown {
+    min-width: 140px;
+    font-size: 0.9em;
+  }
+}
